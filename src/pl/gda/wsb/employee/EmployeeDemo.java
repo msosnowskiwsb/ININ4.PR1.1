@@ -18,20 +18,14 @@ public class EmployeeDemo {
     static String fileName = System.getProperty("user.dir") + "\\utils\\db.txt";
 
     public static void main(String args[]) {
-        String operatorName = args[0];
+        String operatorName = "Mateusz";
         Integer empoyeesCounter = 14;
         ArrayList<String> employees = new ArrayList<>();
         ArrayList<String> loggedEmployess = new ArrayList<>();
         SimpleDateFormat ft = new SimpleDateFormat("dd.MM.yy HH:mm"); // Dodano po zajęciach - zdefiniowanie formatu daty
 
-        File file = new File(fileName);
-        Scanner fileScanner = null;
-        try {
-            fileScanner = new Scanner(file);
-        } catch (FileNotFoundException e) {
-            System.out.println("Błąd pobrania pliku.");
-            return;
-        }
+        Scanner fileScanner = getFileScanner();
+        if (fileScanner == null) return;
 
         Pattern pattern = Pattern.compile("(true|false) - (.+)");
         while (fileScanner.hasNextLine()) {
@@ -127,6 +121,18 @@ public class EmployeeDemo {
         }
 
 
+    }
+
+    private static Scanner getFileScanner() {
+        File file = new File(fileName);
+        Scanner fileScanner = null;
+        try {
+            fileScanner = new Scanner(file);
+        } catch (FileNotFoundException e) {
+            System.out.println("Błąd pobrania pliku.");
+            return null;
+        }
+        return fileScanner;
     }
 
 }
