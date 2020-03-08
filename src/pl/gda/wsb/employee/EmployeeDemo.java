@@ -1,8 +1,6 @@
 package pl.gda.wsb.employee;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -39,57 +37,15 @@ public class EmployeeDemo {
         }
         fileScanner.close();
 
-        printWelcomeText();
+        EemployeePrinter.printWelcomeText();
 
-        printEmployees();
+        EemployeePrinter.printEmployees();
 
-        printLoggedEmployees();
+        EemployeePrinter.printLoggedEmployees();
 
         employeeRepository.readEmployeeNameAndChangeStatus();
 
 
-    }
-
-    private static void printEmployees() {
-        if (EmployeeRepository.getEmployees().size() == 0) {
-            System.out.println("Brak pracowników");
-        } else {
-            System.out.println("Liczba pracowników: " + EmployeeRepository.getEmployees().size());
-        }
-
-        if (EmployeeRepository.getEmployees().size() > 0) {
-            System.out.println("\nLista pracowników:");
-            for (int i = 0; i < EmployeeRepository.getEmployees().size(); i++) {
-                if (i == 5) {
-                    System.out.println("...");
-                    break;
-                }
-                System.out.println(EmployeeRepository.getEmployees().get(i));
-            }
-        }
-    }
-
-    private static void printLoggedEmployees() {
-        if (EmployeeRepository.getEmployees(true).size() > 0) {
-            System.out.println("\nZalogowani użytkownicy: (" + EmployeeRepository.getEmployees(true).size() + "):");
-            for (int i = 0; i < EmployeeRepository.getEmployees(true).size(); i++) {
-                if (i == 5) {
-                    System.out.println("...");
-                    break;
-                }
-                System.out.println(EmployeeRepository.getEmployees(true).get(i));
-            }
-        }
-    }
-
-    private static void printWelcomeText() {
-        SimpleDateFormat ft = new SimpleDateFormat("dd.MM.yy HH:mm");
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("Hello ").append(DataBase.getOperatorName()).append("!").append("\n")
-                .append("Aktualna data: ").append(ft.format(new Date()))
-                .append("\nNazwa operatora ").append(DataBase.getOperatorName())
-                .append("\nNazwa firmy: ").append(companyName);
-        System.out.println(stringBuilder);
     }
 
 }

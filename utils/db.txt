@@ -4,7 +4,7 @@ false - Elżbieta Pieniek - kierowca
 false - Jerzy Rzędowski - sprzedawca
 false - Małgorzata Fido - dyrektor
 false - Mariusz Brun - kierowca
-true - Renata Morawska - sprzedawca
+false - Renata Morawska - sprzedawca
 false - Agnieszka Karczmarczyk - sekretarka
 false - Jolanta Midek - kierownik
 false - Danuta Jeziorska - sekretarka
