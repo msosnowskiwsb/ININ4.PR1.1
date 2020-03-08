@@ -40,42 +40,22 @@ public class EmployeeDemo {
 
         printWelcomeText();
 
-        if (getEmployees().size() == 0) {
-            System.out.println("Błąd pobieraania pracowników");
-        } else if (getEmployees().size() == 0) {
-            System.out.println("Brak pracowników");
-        } else {
-            System.out.println("Liczba pracowników: " + getEmployees().size());
-        }
-
-        if (getEmployees().size() > 0) {
-            System.out.println("\nLista pracowników:");
-            for (int i = 0; i < getEmployees().size(); i++) {
-                if (i == 5) {
-                    System.out.println("...");
-                    break;
-                }
-                System.out.println(getEmployees().get(i));
-            }
-        }
+        printEmployees();
 
         printLoggedEmployees();
 
+        readEmployeeNameAndChangeStatus();
+
+
+    }
+
+    private static void readEmployeeNameAndChangeStatus() {
         System.out.println("\nPodaj imię i nazwisko (exit = koniec):");
         Scanner inScanner = new Scanner(System.in);
         while (inScanner.hasNextLine()) {
             String text = inScanner.nextLine();
             if (text.equals("exit")) {
-                FileWriter fw = null;
-                try {
-                    fw = new FileWriter(fileName, false);
-                    for (String employee : employees) {
-                        fw.write(employee + "\n");
-                    }
-                    fw.close();
-                } catch (IOException e) {
-                    System.out.println("Błąd zapisu pliku!");
-                }
+                saveToFile();
                 break;
             }
 
@@ -101,8 +81,38 @@ public class EmployeeDemo {
                 System.out.println("Błędnie podane imię i nazwisko!");
             }
         }
+    }
 
+    private static void saveToFile() {
+        FileWriter fw = null;
+        try {
+            fw = new FileWriter(fileName, false);
+            for (String employee : getEmployees()) {
+                fw.write(employee + "\n");
+            }
+            fw.close();
+        } catch (IOException e) {
+            System.out.println("Błąd zapisu pliku!");
+        }
+    }
 
+    private static void printEmployees() {
+        if (getEmployees().size() == 0) {
+            System.out.println("Brak pracowników");
+        } else {
+            System.out.println("Liczba pracowników: " + getEmployees().size());
+        }
+
+        if (getEmployees().size() > 0) {
+            System.out.println("\nLista pracowników:");
+            for (int i = 0; i < getEmployees().size(); i++) {
+                if (i == 5) {
+                    System.out.println("...");
+                    break;
+                }
+                System.out.println(getEmployees().get(i));
+            }
+        }
     }
 
     private static void printLoggedEmployees() {
