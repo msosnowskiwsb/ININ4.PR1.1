@@ -11,8 +11,8 @@ public class EmployeeDemo {
     public static String companyName = "Logintegra Sp. z o.o.";
     static String fileName = System.getProperty("user.dir") + "\\utils\\db.txt";
 
-    static ArrayList<String> employees = new ArrayList<>();
-    static ArrayList<String> loggedEmployees = new ArrayList<>();
+    static ArrayList<Employee> employees = new ArrayList<>();
+    static ArrayList<Employee> loggedEmployees = new ArrayList<>();
     private static DataBase dataBase;
     private static EmployeeRepository  employeeRepository;
 
@@ -24,14 +24,21 @@ public class EmployeeDemo {
         Scanner fileScanner = dataBase.getFileScanner();
         if (fileScanner == null) return;
 
-        Pattern pattern = Pattern.compile("(true|false) - (.+)");
+        Pattern pattern = Pattern.compile("(true|false) - (.+) - (.+)");
         while (fileScanner.hasNextLine()) {
-            String employee = fileScanner.nextLine();
-            Matcher matcher = pattern.matcher(employee);
+            String lineFromFile = fileScanner.nextLine();
+            Matcher matcher = pattern.matcher(lineFromFile);
             if (matcher.matches()) {
+
+                Employee employee = new Employee(
+                        Boolean.parseBoolean(matcher.group(1)),
+                        matcher.group(2),
+                        matcher.group(3)
+                );
+
                 employeeRepository.getEmployees().add(employee);
                 if (Boolean.parseBoolean(matcher.group(1))) {
-                    employeeRepository.getEmployees(true).add(matcher.group(2));
+                    employeeRepository.getEmployees(true).add(employee);
                 }
             }
         }
@@ -43,8 +50,7 @@ public class EmployeeDemo {
 
         EemployeePrinter.printLoggedEmployees();
 
-        employeeRepository.readEmployeeNameAndChangeStatus();
-
+        employeeRepository.readEmployeeNameAndChangeStatus(EmployeeRepository.getEmployees());
 
     }
 

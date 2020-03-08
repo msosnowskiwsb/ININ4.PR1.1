@@ -9,11 +9,11 @@ import java.util.Scanner;
 
 public class DataBase {
 
-    static void saveToFile(ArrayList<String> employeesListToSave) {
+    static void saveToFile(ArrayList<Employee> employeesListToSave) {
         FileWriter fw = null;
         try {
             fw = new FileWriter(EmployeeDemo.fileName, false);
-            for (String employee : employeesListToSave) {
+            for (Employee employee : employeesListToSave) {
                 fw.write(employee + "\n");
             }
             fw.close();
