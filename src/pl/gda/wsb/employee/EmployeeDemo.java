@@ -44,7 +44,7 @@ public class EmployeeDemo {
         fileScanner.close();
 
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("Hello ").append(args[1]).append("!").append("\n")
+        stringBuilder.append("Hello ").append("Mateusz").append("!").append("\n")
                 .append("Aktualna data: ").append(ft.format(new Date())) // Zmiana linii po zajęciach - użycie innego formatu
                 .append("Nazwa operatora ").append(operatorName)
                 .append("Nazwa firmy: ").append(companyName);
