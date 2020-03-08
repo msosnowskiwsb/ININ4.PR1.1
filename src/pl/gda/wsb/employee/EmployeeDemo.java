@@ -22,9 +22,7 @@ public class EmployeeDemo {
 
     public static void main(String args[]) {
         String operatorName = "Mateusz";
-        Integer empoyeesCounter = 14;
-        ArrayList<String> employees = new ArrayList<>();
-        ArrayList<String> loggedEmployess = new ArrayList<>();
+        //Integer empoyeesCounter = 14;
         SimpleDateFormat ft = new SimpleDateFormat("dd.MM.yy HH:mm"); // Dodano po zajęciach - zdefiniowanie formatu daty
 
         Scanner fileScanner = getFileScanner();
@@ -35,9 +33,9 @@ public class EmployeeDemo {
             String employee = fileScanner.nextLine();
             Matcher matcher = pattern.matcher(employee);
             if (matcher.matches()) {
-                employees.add(employee);
+                getEmployees().add(employee);
                 if (Boolean.parseBoolean(matcher.group(1))) {
-                    loggedEmployess.add(matcher.group(2));
+                    getEmployees(true).add(matcher.group(2));
                 }
             }
         }
@@ -50,33 +48,33 @@ public class EmployeeDemo {
                 .append("Nazwa firmy: ").append(companyName);
         System.out.println(stringBuilder);
 
-        if (empoyeesCounter == null) {
+        if (getEmployees().size() == 0) {
             System.out.println("Błąd pobieraania pracowników");
-        } else if (empoyeesCounter == 0) {
+        } else if (getEmployees().size() == 0) {
             System.out.println("Brak pracowników");
         } else {
-            System.out.println("Liczba pracowników: " + empoyeesCounter);
+            System.out.println("Liczba pracowników: " + getEmployees().size());
         }
 
-        if (employees.size() > 0) {
+        if (getEmployees().size() > 0) {
             System.out.println("\nLista pracowników:");
-            for (int i = 0; i < employees.size(); i++) {
+            for (int i = 0; i < getEmployees().size(); i++) {
                 if (i == 5) {
                     System.out.println("...");
                     break;
                 }
-                System.out.println(employees.get(i));
+                System.out.println(getEmployees().get(i));
             }
         }
 
-        if (loggedEmployess.size() > 0) {
-            System.out.println("\nZalogowani użytkownicy: (" + loggedEmployess.size() + "):");
-            for (int i = 0; i < loggedEmployess.size(); i++) {
+        if (getEmployees(true).size() > 0) {
+            System.out.println("\nZalogowani użytkownicy: (" + getEmployees(true).size() + "):");
+            for (int i = 0; i < getEmployees(true).size(); i++) {
                 if (i == 5) {
                     System.out.println("...");
                     break;
                 }
-                System.out.println(loggedEmployess.get(i));
+                System.out.println(getEmployees(true).get(i));
             }
         }
 
@@ -103,13 +101,13 @@ public class EmployeeDemo {
             int i = 0;
             Boolean searched = false;  // Dodane po zajęciach
 
-            for (String employee : employees) {
+            for (String employee : getEmployees()) {
                 Matcher matcher = patternSearch.matcher(employee);
                 if (matcher.matches()) {
                     searched = true;  // Dodane po zajęciach
                     boolean isLogged = Boolean.parseBoolean(matcher.group(1));
-                    employees.remove(i);
-                    employees.add(i, employee.replace(matcher.group(1), isLogged ? "false" : "true"));
+                    getEmployees().remove(i);
+                    getEmployees().add(i, employee.replace(matcher.group(1), isLogged ? "false" : "true"));
                     break; // Dodane po zajęciach - brak tego break powodował błąd
                 }
                 i++;
