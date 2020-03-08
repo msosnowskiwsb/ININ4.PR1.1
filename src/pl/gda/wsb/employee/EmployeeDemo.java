@@ -1,9 +1,5 @@
 package pl.gda.wsb.employee;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -19,10 +15,11 @@ public class EmployeeDemo {
 
     static ArrayList<String> employees = new ArrayList<>();
     static ArrayList<String> loggedEmployees = new ArrayList<>();
+    private static DataBase dataBase;
 
     public static void main(String args[]) {
 
-        Scanner fileScanner = getFileScanner();
+        Scanner fileScanner = dataBase.getFileScanner();
         if (fileScanner == null) return;
 
         Pattern pattern = Pattern.compile("(true|false) - (.+)");
@@ -55,7 +52,7 @@ public class EmployeeDemo {
         while (inScanner.hasNextLine()) {
             String text = inScanner.nextLine();
             if (text.equals("exit")) {
-                saveToFile();
+                dataBase.saveToFile(getEmployees());
                 break;
             }
 
@@ -80,19 +77,6 @@ public class EmployeeDemo {
             } else {
                 System.out.println("Błędnie podane imię i nazwisko!");
             }
-        }
-    }
-
-    private static void saveToFile() {
-        FileWriter fw = null;
-        try {
-            fw = new FileWriter(fileName, false);
-            for (String employee : getEmployees()) {
-                fw.write(employee + "\n");
-            }
-            fw.close();
-        } catch (IOException e) {
-            System.out.println("Błąd zapisu pliku!");
         }
     }
 
@@ -131,23 +115,11 @@ public class EmployeeDemo {
     private static void printWelcomeText() {
         SimpleDateFormat ft = new SimpleDateFormat("dd.MM.yy HH:mm");
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("Hello ").append(getOperatorName()).append("!").append("\n")
+        stringBuilder.append("Hello ").append(DataBase.getOperatorName()).append("!").append("\n")
                 .append("Aktualna data: ").append(ft.format(new Date()))
-                .append("\nNazwa operatora ").append(getOperatorName())
+                .append("\nNazwa operatora ").append(DataBase.getOperatorName())
                 .append("\nNazwa firmy: ").append(companyName);
         System.out.println(stringBuilder);
-    }
-
-    private static Scanner getFileScanner() {
-        File file = new File(fileName);
-        Scanner fileScanner = null;
-        try {
-            fileScanner = new Scanner(file);
-        } catch (FileNotFoundException e) {
-            System.out.println("Błąd pobrania pliku.");
-            return null;
-        }
-        return fileScanner;
     }
 
     private static ArrayList<String> getEmployees(Boolean onlyLogged){
@@ -156,10 +128,6 @@ public class EmployeeDemo {
 
     private static ArrayList<String> getEmployees(){
         return employees;
-    }
-
-    private static String getOperatorName(){
-        return "Mateusz";
     }
 
 }
