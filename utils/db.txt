@@ -1,5 +1,5 @@
 false - Magdalena Anna - dyrektor
-true - Andrzej Frańczak - prezes
+false - Andrzej Frańczak - prezes
 false - Elżbieta Pieniek - kierowca
 false - Jerzy Rzędowski - sprzedawca
 false - Małgorzata Fido - dyrektor

@@ -61,8 +61,19 @@ public class EmployeeDemo {
             System.out.println("Liczba pracowników: " + empoyeesCounter);
         }
 
+        if (employees.size() > 0) {
+            System.out.println("\nLista pracowników:");
+            for (int i = 0; i < employees.size(); i++) {
+                if (i == 5) {
+                    System.out.println("...");
+                    break;
+                }
+                System.out.println(employees.get(i));
+            }
+        }
+
         if (loggedEmployess.size() > 0) {
-            System.out.println("Zalogowani użytkownicy:");
+            System.out.println("\nZalogowani użytkownicy: (" + loggedEmployess.size() + "):");
             for (int i = 0; i < loggedEmployess.size(); i++) {
                 if (i == 5) {
                     System.out.println("...");
