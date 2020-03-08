@@ -21,7 +21,6 @@ public class EmployeeDemo {
     static ArrayList<String> loggedEmployees = new ArrayList<>();
 
     public static void main(String args[]) {
-        SimpleDateFormat ft = new SimpleDateFormat("dd.MM.yy HH:mm"); // Dodano po zajęciach - zdefiniowanie formatu daty
 
         Scanner fileScanner = getFileScanner();
         if (fileScanner == null) return;
@@ -39,12 +38,7 @@ public class EmployeeDemo {
         }
         fileScanner.close();
 
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("Hello ").append(getOperatorName()).append("!").append("\n")
-                .append("Aktualna data: ").append(ft.format(new Date())) // Zmiana linii po zajęciach - użycie innego formatu
-                .append("Nazwa operatora ").append(getOperatorName())
-                .append("Nazwa firmy: ").append(companyName);
-        System.out.println(stringBuilder);
+        printWelcomeText();
 
         if (getEmployees().size() == 0) {
             System.out.println("Błąd pobieraania pracowników");
@@ -120,6 +114,16 @@ public class EmployeeDemo {
         }
 
 
+    }
+
+    private static void printWelcomeText() {
+        SimpleDateFormat ft = new SimpleDateFormat("dd.MM.yy HH:mm"); // Dodano po zajęciach - zdefiniowanie formatu daty
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("Hello ").append(getOperatorName()).append("!").append("\n")
+                .append("Aktualna data: ").append(ft.format(new Date())) // Zmiana linii po zajęciach - użycie innego formatu
+                .append("Nazwa operatora ").append(getOperatorName())
+                .append("Nazwa firmy: ").append(companyName);
+        System.out.println(stringBuilder);
     }
 
     private static Scanner getFileScanner() {
