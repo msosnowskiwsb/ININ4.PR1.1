@@ -21,8 +21,6 @@ public class EmployeeDemo {
     static ArrayList<String> loggedEmployees = new ArrayList<>();
 
     public static void main(String args[]) {
-        String operatorName = "Mateusz";
-        //Integer empoyeesCounter = 14;
         SimpleDateFormat ft = new SimpleDateFormat("dd.MM.yy HH:mm"); // Dodano po zajęciach - zdefiniowanie formatu daty
 
         Scanner fileScanner = getFileScanner();
@@ -42,9 +40,9 @@ public class EmployeeDemo {
         fileScanner.close();
 
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("Hello ").append("Mateusz").append("!").append("\n")
+        stringBuilder.append("Hello ").append(getOperatorName()).append("!").append("\n")
                 .append("Aktualna data: ").append(ft.format(new Date())) // Zmiana linii po zajęciach - użycie innego formatu
-                .append("Nazwa operatora ").append(operatorName)
+                .append("Nazwa operatora ").append(getOperatorName())
                 .append("Nazwa firmy: ").append(companyName);
         System.out.println(stringBuilder);
 
@@ -142,6 +140,10 @@ public class EmployeeDemo {
 
     private static ArrayList<String> getEmployees(){
         return employees;
+    }
+
+    private static String getOperatorName(){
+        return "Mateusz";
     }
 
 }
