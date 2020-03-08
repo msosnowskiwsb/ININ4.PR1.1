@@ -16,8 +16,12 @@ public class EmployeeDemo {
     static ArrayList<String> employees = new ArrayList<>();
     static ArrayList<String> loggedEmployees = new ArrayList<>();
     private static DataBase dataBase;
+    private static EmployeeRepository  employeeRepository;
 
     public static void main(String args[]) {
+
+        dataBase = new DataBase();
+        employeeRepository = new EmployeeRepository();
 
         Scanner fileScanner = dataBase.getFileScanner();
         if (fileScanner == null) return;
@@ -27,9 +31,9 @@ public class EmployeeDemo {
             String employee = fileScanner.nextLine();
             Matcher matcher = pattern.matcher(employee);
             if (matcher.matches()) {
-                getEmployees().add(employee);
+                employeeRepository.getEmployees().add(employee);
                 if (Boolean.parseBoolean(matcher.group(1))) {
-                    getEmployees(true).add(matcher.group(2));
+                    employeeRepository.getEmployees(true).add(matcher.group(2));
                 }
             }
         }
@@ -41,73 +45,39 @@ public class EmployeeDemo {
 
         printLoggedEmployees();
 
-        readEmployeeNameAndChangeStatus();
+        employeeRepository.readEmployeeNameAndChangeStatus();
 
 
-    }
-
-    private static void readEmployeeNameAndChangeStatus() {
-        System.out.println("\nPodaj imię i nazwisko (exit = koniec):");
-        Scanner inScanner = new Scanner(System.in);
-        while (inScanner.hasNextLine()) {
-            String text = inScanner.nextLine();
-            if (text.equals("exit")) {
-                dataBase.saveToFile(getEmployees());
-                break;
-            }
-
-            Pattern patternSearch = Pattern.compile("^(true|false) - " + text + " - (.+)$");
-            int i = 0;
-            Boolean searched = false;
-
-            for (String employee : getEmployees()) {
-                Matcher matcher = patternSearch.matcher(employee);
-                if (matcher.matches()) {
-                    searched = true;
-                    boolean isLogged = Boolean.parseBoolean(matcher.group(1));
-                    getEmployees().remove(i);
-                    getEmployees().add(i, employee.replace(matcher.group(1), isLogged ? "false" : "true"));
-                    break;
-                }
-                i++;
-            }
-
-            if (searched) {
-                System.out.println("Zmieniono status dla pracownika: " + text);
-            } else {
-                System.out.println("Błędnie podane imię i nazwisko!");
-            }
-        }
     }
 
     private static void printEmployees() {
-        if (getEmployees().size() == 0) {
+        if (EmployeeRepository.getEmployees().size() == 0) {
             System.out.println("Brak pracowników");
         } else {
-            System.out.println("Liczba pracowników: " + getEmployees().size());
+            System.out.println("Liczba pracowników: " + EmployeeRepository.getEmployees().size());
         }
 
-        if (getEmployees().size() > 0) {
+        if (EmployeeRepository.getEmployees().size() > 0) {
             System.out.println("\nLista pracowników:");
-            for (int i = 0; i < getEmployees().size(); i++) {
+            for (int i = 0; i < EmployeeRepository.getEmployees().size(); i++) {
                 if (i == 5) {
                     System.out.println("...");
                     break;
                 }
-                System.out.println(getEmployees().get(i));
+                System.out.println(EmployeeRepository.getEmployees().get(i));
             }
         }
     }
 
     private static void printLoggedEmployees() {
-        if (getEmployees(true).size() > 0) {
-            System.out.println("\nZalogowani użytkownicy: (" + getEmployees(true).size() + "):");
-            for (int i = 0; i < getEmployees(true).size(); i++) {
+        if (EmployeeRepository.getEmployees(true).size() > 0) {
+            System.out.println("\nZalogowani użytkownicy: (" + EmployeeRepository.getEmployees(true).size() + "):");
+            for (int i = 0; i < EmployeeRepository.getEmployees(true).size(); i++) {
                 if (i == 5) {
                     System.out.println("...");
                     break;
                 }
-                System.out.println(getEmployees(true).get(i));
+                System.out.println(EmployeeRepository.getEmployees(true).get(i));
             }
         }
     }
@@ -120,14 +90,6 @@ public class EmployeeDemo {
                 .append("\nNazwa operatora ").append(DataBase.getOperatorName())
                 .append("\nNazwa firmy: ").append(companyName);
         System.out.println(stringBuilder);
-    }
-
-    private static ArrayList<String> getEmployees(Boolean onlyLogged){
-        return onlyLogged ? loggedEmployees : employees;
-    }
-
-    private static ArrayList<String> getEmployees(){
-        return employees;
     }
 
 }
