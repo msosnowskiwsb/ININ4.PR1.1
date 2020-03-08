@@ -59,23 +59,13 @@ public class EmployeeDemo {
             }
         }
 
-        if (getEmployees(true).size() > 0) {
-            System.out.println("\nZalogowani użytkownicy: (" + getEmployees(true).size() + "):");
-            for (int i = 0; i < getEmployees(true).size(); i++) {
-                if (i == 5) {
-                    System.out.println("...");
-                    break;
-                }
-                System.out.println(getEmployees(true).get(i));
-            }
-        }
+        printLoggedEmployees();
 
         System.out.println("\nPodaj imię i nazwisko (exit = koniec):");
         Scanner inScanner = new Scanner(System.in);
         while (inScanner.hasNextLine()) {
             String text = inScanner.nextLine();
             if (text.equals("exit")) {
-                // Linie 80-89 dodane po zajęciach - zapis do pliku
                 FileWriter fw = null;
                 try {
                     fw = new FileWriter(fileName, false);
@@ -91,21 +81,20 @@ public class EmployeeDemo {
 
             Pattern patternSearch = Pattern.compile("^(true|false) - " + text + " - (.+)$");
             int i = 0;
-            Boolean searched = false;  // Dodane po zajęciach
+            Boolean searched = false;
 
             for (String employee : getEmployees()) {
                 Matcher matcher = patternSearch.matcher(employee);
                 if (matcher.matches()) {
-                    searched = true;  // Dodane po zajęciach
+                    searched = true;
                     boolean isLogged = Boolean.parseBoolean(matcher.group(1));
                     getEmployees().remove(i);
                     getEmployees().add(i, employee.replace(matcher.group(1), isLogged ? "false" : "true"));
-                    break; // Dodane po zajęciach - brak tego break powodował błąd
+                    break;
                 }
                 i++;
             }
 
-            // Poniższe linie (110-114) dodane po zajęciach - wyświetlanie info czy status został zmieniony, czy błędne dane
             if (searched) {
                 System.out.println("Zmieniono status dla pracownika: " + text);
             } else {
@@ -116,13 +105,26 @@ public class EmployeeDemo {
 
     }
 
+    private static void printLoggedEmployees() {
+        if (getEmployees(true).size() > 0) {
+            System.out.println("\nZalogowani użytkownicy: (" + getEmployees(true).size() + "):");
+            for (int i = 0; i < getEmployees(true).size(); i++) {
+                if (i == 5) {
+                    System.out.println("...");
+                    break;
+                }
+                System.out.println(getEmployees(true).get(i));
+            }
+        }
+    }
+
     private static void printWelcomeText() {
-        SimpleDateFormat ft = new SimpleDateFormat("dd.MM.yy HH:mm"); // Dodano po zajęciach - zdefiniowanie formatu daty
+        SimpleDateFormat ft = new SimpleDateFormat("dd.MM.yy HH:mm");
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("Hello ").append(getOperatorName()).append("!").append("\n")
-                .append("Aktualna data: ").append(ft.format(new Date())) // Zmiana linii po zajęciach - użycie innego formatu
-                .append("Nazwa operatora ").append(getOperatorName())
-                .append("Nazwa firmy: ").append(companyName);
+                .append("Aktualna data: ").append(ft.format(new Date()))
+                .append("\nNazwa operatora ").append(getOperatorName())
+                .append("\nNazwa firmy: ").append(companyName);
         System.out.println(stringBuilder);
     }
 
