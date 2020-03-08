@@ -17,6 +17,9 @@ public class EmployeeDemo {
     public static String companyName = "Logintegra Sp. z o.o.";
     static String fileName = System.getProperty("user.dir") + "\\utils\\db.txt";
 
+    static ArrayList<String> employees = new ArrayList<>();
+    static ArrayList<String> loggedEmployees = new ArrayList<>();
+
     public static void main(String args[]) {
         String operatorName = "Mateusz";
         Integer empoyeesCounter = 14;
@@ -133,6 +136,14 @@ public class EmployeeDemo {
             return null;
         }
         return fileScanner;
+    }
+
+    private static ArrayList<String> getEmployees(Boolean onlyLogged){
+        return onlyLogged ? loggedEmployees : employees;
+    }
+
+    private static ArrayList<String> getEmployees(){
+        return employees;
     }
 
 }
