@@ -1,14 +1,12 @@
 package pl.gda.wsb.employee;
 
-public class Employee {
+public abstract class Employee {
     boolean logged;
     String name;
-    String position;
 
-    public Employee(boolean logged, String name, String position) {
+    public Employee(boolean logged, String name) {
         this.logged = logged;
         this.name = name;
-        this.position = position;
     }
 
     public boolean isLogged() {
@@ -19,9 +17,7 @@ public class Employee {
         return name;
     }
 
-    public String getPosition() {
-        return position;
-    }
+    public abstract String getPosition();
 
     public void setLogged(boolean logged) {
         this.logged = logged;
@@ -29,6 +25,6 @@ public class Employee {
 
     @Override
     public String toString() {
-        return logged + " - " + name + " - " + position;
+        return logged + " - " + name + " - " + getPosition();
     }
 }
