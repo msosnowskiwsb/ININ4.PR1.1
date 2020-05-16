@@ -1,5 +1,5 @@
 false - Magdalena Anna - dyrektor
-false - Andrzej Frańczak - kierowca
+true - Andrzej Frańczak - kierowca
 true - Elżbieta Pieniek - kierowca
 false - Jerzy Rzędowski - sprzedawca
 false - Małgorzata Fido - dyrektor
@@ -8,9 +8,9 @@ false - Renata Morawska - sprzedawca
 false - Agnieszka Karczmarczyk - sprzedawca
 false - Danuta Jeziorska - sprzedawca
 false - Sylwia Raczyńska - sprzedawca
-true - Jolanta Skrzypczak - kierowca
+false - Jolanta Skrzypczak - kierowca
 false - Zbigniew Knap - dyrektor
 true - Małgorzata Januszewska - kierowca
-true - Sławomir Zwoliński - kierowca
+false - Sławomir Zwoliński - kierowca
 false - Tomasz Bystry - sprzedawca
 false - Bożena Szybuk - kierowca

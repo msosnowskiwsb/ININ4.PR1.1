@@ -25,52 +25,16 @@ public class EmployeeDemo {
         if (fileScanner == null) return;
 
         Pattern pattern = Pattern.compile("(true|false) - (.+) - (.+)");
+
         while (fileScanner.hasNextLine()) {
             String lineFromFile = fileScanner.nextLine();
             Matcher matcher = pattern.matcher(lineFromFile);
             if (matcher.matches()) {
-
                 boolean status = Boolean.parseBoolean(matcher.group(1));
                 String employeeName = matcher.group(2);
                 String position = matcher.group(3);
+                createObj(status, employeeName, position);
 
-                switch (position){
-                    case "dyrektor": {
-                        Employee employee = new Director(status,employeeName);
-                        employeeRepository.getEmployees().add(employee);
-                        if (status){
-                            employeeRepository.getEmployees(true).add(employee);
-                        }
-                        break;
-                    }
-                    case "sprzedawca": {
-                        Employee employee = new Seller(status,employeeName);
-                        employeeRepository.getEmployees().add(employee);
-                        if (status){
-                            employeeRepository.getEmployees(true).add(employee);
-                        }
-                        break;
-                    }
-                    case "kierowca": {
-                        Employee employee = new Driver(status,employeeName);
-                        employeeRepository.getEmployees().add(employee);
-                        if (status){
-                            employeeRepository.getEmployees(true).add(employee);
-                        }
-                        break;
-                    }
-                }
-
-/*                Employee employee = new Employee(
-                        Boolean.parseBoolean(matcher.group(1)),
-                        matcher.group(2),
-                        matcher.group(3)
-                );
-
-                employeeRepository.getEmployees().add(employee);
-                if (Boolean.parseBoolean(matcher.group(1))) {
-                    employeeRepository.getEmployees(true).add(employee);
-                }*/
             }
         }
         fileScanner.close();
@@ -83,6 +47,19 @@ public class EmployeeDemo {
 
         employeeRepository.readEmployeeNameAndChangeStatus(EmployeeRepository.getEmployees());
 
+    }
+
+    private static void createObj(boolean status, String employeeName, String position) {
+        Employee employee = new Employee(status, employeeName) {
+            @Override
+            public String getPosition() {
+                return position;
+            }
+        };
+        employeeRepository.getEmployees().add(employee);
+        if (status){
+            employeeRepository.getEmployees(true).add(employee);
+        }
     }
 
 }
