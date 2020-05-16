@@ -9,46 +9,41 @@ public class EmployeeRepository {
 
     DataBase dataBase = new DataBase();
 
-     void readEmployeeNameAndChangeStatus(ArrayList<Employee> employeeList) {
+    void readEmployeeNameAndChangeStatus(ArrayList<Employee> employeeList) {
         System.out.println("\nPodaj imię i nazwisko (exit = koniec):");
         Scanner inScanner = new Scanner(System.in);
         while (inScanner.hasNextLine()) {
-            String employeeNameFromUser = inScanner.nextLine();
-            if (employeeNameFromUser.equals("exit")) {
-                dataBase.saveToFile(getEmployees());
-                break;
-            }
-
-            Pattern patternSearch = Pattern.compile("^(true|false) - " + employeeNameFromUser + " - (.+)$");
-            int i = 0;
-            Boolean searched = false;
-
-            for (Employee employee : getEmployees()) {
-                Matcher matcher = patternSearch.matcher(employee.toString());
-                if (matcher.matches()) {
-                    searched = true;
-                    boolean isLogged = Boolean.parseBoolean(matcher.group(1));
-                    //getEmployees().remove(i);
-                    //getEmployees().add(i, employee.replace(matcher.group(1), isLogged ? "false" : "true"));
-                    employeeList.get(i).setLogged(!isLogged);
-                    break;
-                }
-                i++;
-            }
-
-            if (searched) {
-                System.out.println("Zmieniono status dla pracownika: " + employeeNameFromUser);
-            } else {
-                System.out.println("Błędnie podane imię i nazwisko!");
+            try {
+                Employee foundEmployee = searchEmployee(employeeList, inScanner.nextLine());
+                foundEmployee.setLogged(!foundEmployee.isLogged());
+                System.out.println("Zmieniono status dla pracownika: " + foundEmployee.getName() + " na " + foundEmployee.isLogged() + ".\n\nPodaj imię i nazwisko (exit = koniec):");
+            } catch (WrongEmployee exception) {
             }
         }
     }
 
-    static ArrayList<Employee> getEmployees(Boolean onlyLogged){
+    private Employee searchEmployee(ArrayList<Employee> employeeList, String employeeNameFromUser) throws WrongEmployee {
+        if (employeeNameFromUser.equals("exit")) {
+            dataBase.saveToFile(employeeList);
+            System.exit(0);
+        }
+
+        Pattern patternSearch = Pattern.compile("^(true|false) - " + employeeNameFromUser + " - (.+)$");
+
+        for (Employee employee : employeeList) {
+            Matcher matcher = patternSearch.matcher(employee.toString());
+            if (matcher.matches()) {
+                return employee;
+            }
+        }
+        throw new WrongEmployee();
+    }
+
+    static ArrayList<Employee> getEmployees(Boolean onlyLogged) {
         return onlyLogged ? EmployeeDemo.loggedEmployees : EmployeeDemo.employees;
     }
 
-    static ArrayList<Employee> getEmployees(){
+    static ArrayList<Employee> getEmployees() {
         return EmployeeDemo.employees;
     }
 }

@@ -29,6 +29,7 @@ public class DataBase {
             fileScanner = new Scanner(file);
         } catch (FileNotFoundException e) {
             System.out.println("Błąd pobrania pliku.");
+            e.printStackTrace();
             return null;
         }
         return fileScanner;
