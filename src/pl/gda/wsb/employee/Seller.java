@@ -7,6 +7,6 @@ public class Seller extends Employee{
 
     @Override
     public String getPosition() {
-        return "sprzedawca";
+        return "sprzedawcaaaa";
     }
 }
